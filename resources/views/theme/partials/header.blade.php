@@ -1,3 +1,7 @@
+    @php
+        $headerCategories = App\Models\Category::get();
+    @endphp
+
     <!--================Header Menu Area =================-->
     <header class="header_area">
         <div class="main_menu">
@@ -24,14 +28,15 @@
                                 <a href="{{ route('theme.category') }}" class="nav-link dropdown-toggle"
                                     data-toggle="dropdown" role="button" aria-haspopup="true"
                                     aria-expanded="false">Category</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link"
-                                            href="{{ route('theme.category') }}">Food</a></li>
-                                    <li class="nav-item"><a class="nav-link"
-                                            href="{{ route('theme.category') }}">Bussiness</a></li>
-                                    <li class="nav-item"><a class="nav-link"
-                                            href="{{ route('theme.category') }}">Travel</a></li>
-                                </ul>
+                                @if (count($headerCategories) > 0)
+                                    <ul class="dropdown-menu">
+                                        @foreach ($headerCategories as $category)
+                                            <li class="nav-item"><a class="nav-link"
+                                                    href="{{ route('theme.category', ['id' => $category->id]) }}">{{ $category->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </li>
                             <li class="nav-item  @yield('contact-active')"><a class="nav-link"
                                     href="{{ route('theme.contact') }}">Contact</a>
@@ -39,7 +44,9 @@
                         </ul>
 
                         <!-- Add new blog -->
-                        <a href="#" class="btn btn-sm btn-primary mr-2">Add New</a>
+                        @if (Auth::check())
+                            <a href="{{ route('blogs.create') }}" class="btn btn-sm btn-primary mr-2">Add New</a>
+                        @endif
                         <!-- End - Add new blog -->
                         <ul class="nav navbar-nav navbar-right navbar-social">
                             @if (!Auth::check())
@@ -52,10 +59,12 @@
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="blog-details.html">My Blogs</a>
                                         <li class="nav-item">
-                                            <form action="{{ route('logout') }}" method="POST">
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                style="display: none;">
                                                 @csrf
-                                                <a class="nav-link" href="javascript:$('form').submit();">Logout</a>
                                             </form>
+                                            <a class="nav-link" href="javascript:void(0);"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                         </li>
                                     </ul>
                                 </li>

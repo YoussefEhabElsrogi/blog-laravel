@@ -1,51 +1,51 @@
+@php
+    $Categories = App\Models\Category::get();
+@endphp
+
 <!-- Start Blog Post Siddebar -->
 <div class="col-lg-4 sidebar-widgets">
     <div class="widget-wrap">
         <div class="single-sidebar-widget newsletter-widget">
             <h4 class="single-sidebar-widget__title">Newsletter</h4>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="form-group mt-30">
                 <div class="col-autos">
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email"
-                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
+                    <form action="{{ route('subscriber.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="inlineFormInputGroup" class="sr-only">Email address</label>
+                            <input type="email" class="form-control" id="inlineFormInputGroup" name="email"
+                                placeholder="Enter your email" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter your email'" value="{{ old('email') }}">
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3 w-100">Subscribe</button>
+                    </form>
                 </div>
             </div>
-            <button class="bbtns d-block mt-20 w-100">Subcribe</button>
         </div>
 
         <div class="single-sidebar-widget post-category-widget">
             <h4 class="single-sidebar-widget__title">Catgory</h4>
-            <ul class="cat-list mt-20">
-                <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Technology</p>
-                        <p>(03)</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Software</p>
-                        <p>(09)</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Lifestyle</p>
-                        <p>(12)</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Shopping</p>
-                        <p>(02)</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-flex justify-content-between">
-                        <p>Food</p>
-                        <p>(10)</p>
-                    </a>
-                </li>
-            </ul>
+            @if (count($Categories) > 0)
+                <ul class="cat-list mt-20">
+                    @foreach ($Categories as $category)
+                        <li>
+                            <a href="{{ route('theme.category', ['id' => $category->id]) }}"
+                                class="d-flex justify-content-between">
+                                <p>{{ $category->name }}</p>
+                                <p>(03)</p>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
 
         <div class="single-sidebar-widget popular-post-widget">
@@ -103,4 +103,3 @@
     </div>
 </div>
 <!-- End Blog Post Siddebar -->
-

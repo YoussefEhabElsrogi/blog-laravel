@@ -8,7 +8,7 @@
     <title>Blog - @yield('title')</title>
     <link rel="icon" href="{{ asset('assets') }}/img/Fevicon.png" type="image/png">
 
-    <link rel="stylesheet" href="{{ asset('assets') }}/vendors/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/vendors/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/vendors/linericon/style.css">
