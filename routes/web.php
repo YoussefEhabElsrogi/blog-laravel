@@ -3,7 +3,6 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
@@ -35,19 +34,9 @@ Route::post('/contact/store', [ContactController::class, 'store'])->name('contac
 
 // BLOG ROUTES
 Route::get('/my-blogs', [BlogController::class, 'myBlogs'])->name('blogs.my_blogs');
-Route::resource('blogs', BlogController::class);
+Route::resource('blogs', BlogController::class)->except('index');
 
 // COMMENT ROUTE
 Route::post('/comment/store', [CommentController::class, 'store'])->name('comments.store');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';
