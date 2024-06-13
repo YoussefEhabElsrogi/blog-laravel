@@ -57,7 +57,8 @@
                                         role="button" aria-haspopup="true" aria-expanded="false">Welcome
                                         {{ Auth::user()->name }}</a>
                                     <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="blog-details.html">My Blogs</a>
+                                        <li class="nav-item"><a class="nav-link" href="{{ route('blogs.my_blogs') }}">My
+                                                Blogs</a>
                                         <li class="nav-item">
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                                 style="display: none;">

@@ -33,6 +33,7 @@ Route::post('/subscriber/store', [SubscriberController::class, 'store'])->name('
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 // BLOG ROUTES
+Route::get('/my-blogs', [BlogController::class, 'myBlogs'])->name('blogs.my_blogs');
 Route::resource('blogs', BlogController::class);
 
 Route::get('/dashboard', function () {
